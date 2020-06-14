@@ -15,20 +15,19 @@ const array_to_set = function (array) {
 var terminales = [];
 var no_terminales = [];
 
-onload = function () {
-
+var enviar = document.getElementById('enviar');
+enviar.onclick = ()=>{
+	// Dando formato a los T y NT
 	var terminales = document.getElementById('terminales');
 	var no_terminales = document.getElementById('noterminales');
 
-	terminales.value = sessionStorage.getItem('terminales') || '';
-    no_terminales.value = sessionStorage.getItem('no_terminales') || '';
-    
+	var produccion = document.getElementById('produccion');
+	var gramatica = document.getElementById('gramatica');
+
+	terminales.value = array_to_set(terminales.value.replace(/\s/g, '').split(''));
+	no_terminales.value = array_to_set(no_terminales.value.replace(/\s/g, '').split(''));
+	
+	terminales.disabled = true;
+	no_terminales.disabled = true;
+
 };
-
-
-onchange = function () {
-    var terminales = document.getElementById('terminales');
-    terminales = array_to_set(terminales.value.replace(/\s/g, '').split(''));
-	console.log('Terminales:', terminales);
-};
-

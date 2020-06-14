@@ -46,40 +46,35 @@
            <br>
            <br>
            <p></p>
-          <form>
-
             <div class="form-row justify-content-around">
                 <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2" >
                   <label for="noterminales">Símbolos No Terminales</label>
-                  <input id="noterminales" class="form-control form-control-lg" />
+                  <input id="noterminales"  style="text-transform:uppercase;" class="form-control form-control-lg" />
                 </div>
                 <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
                   <label for="#terminales">Símbolos Terminales</label>
-                  <input id="terminales" class="form-control form-control-lg"/>
+                  <input id="terminales" style="text-transform:lowercase;" class="form-control form-control-lg"/>
                 </div>
             </div>
 
             <div class="form-row">
               <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
-                <input type="text" class="form-control form-control-lg" placeholder="Inserte produccion">
+                <input id="produccion" type="text" class="form-control form-control-lg" placeholder="Inserte produccion">
               </div>
               <div class='col-12 col-md-4 mb-2 mb-md-0  mt-2'>
                 <input class="text-center form-control form-control-lg" type='text' readonly value="=>"/>
               </div>
               <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
-                <input type="text" class="form-control form-control-lg" placeholder="Inserte gramatica">
+                <input id="gramatica" type="text" class="form-control form-control-lg" placeholder="Inserte gramatica">
               </div>
               
               <div id="agrega" class="col-12 col-md-12 mt-2">
-                <button id="selecciona" type="button" class="btn btn-block btn-lg btn-warning">Agregar otra producción!</button>
+                <button id="agregar" type="button" class="btn btn-block btn-lg btn-warning">Agregar otra producción!</button>
               </div>
               <div class="col-12 col-md-12 mt-2">
-                <button type="submit" class="btn btn-block btn-lg btn-warning">Clasificar!</button>
+                <button id="enviar" class="btn btn-block btn-lg btn-warning">Clasificar!</button>
               </div>
-            </div>
-          
-          </form>.
-          
+            </div>         
         </div>
       </div>
     </div>
