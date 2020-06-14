@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Analizador Sintáctico</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="css/landing-page.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+      <div class="row mb-5">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="text-warning">Analizador Sintáctico de Gramáticas</h1>
+          <br>
+          <p class="text-dark">Este es un proyecto que permite clasificar las gramaticas formales utilizando la "Clasificacion de Chomsky"</p>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <p class="text-dark">Tipo de Gramatica que desea analizar</p>
+          <select class="custom-select" id="selTipo">
+              <option selected>Seleccionar tipo de Gramatica</option>
+              <option value="0">Tipo 0: Recurrentemente enumerable </option>
+              <option value="1">Tipo 1: Sensible al contexto</option>
+              <option value="2">Tipo 2: Libre de contexto</option>
+              <option value="3">Tipo 3: Regular</option>
+           </select>
+           <br>
+           <br>
+           <p></p>
+          <form>
+
+            <div class="form-row justify-content-around">
+                <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2" >
+                  <label for="noterminales">Símbolos No Terminales</label>
+                  <input id="noterminales" class="form-control form-control-lg" />
+                </div>
+                <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
+                  <label for="#terminales">Símbolos Terminales</label>
+                  <input id="terminales" class="form-control form-control-lg"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
+                <input type="text" class="form-control form-control-lg" placeholder="Inserte produccion">
+              </div>
+              <div class='col-12 col-md-4 mb-2 mb-md-0  mt-2'>
+                <input class="text-center form-control form-control-lg" type='text' readonly value="=>"/>
+              </div>
+              <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
+                <input type="text" class="form-control form-control-lg" placeholder="Inserte gramatica">
+              </div>
+              
+              <div id="agrega" class="col-12 col-md-12 mt-2">
+                <button id="selecciona" type="button" class="btn btn-block btn-lg btn-warning">Agregar otra producción!</button>
+              </div>
+              <div class="col-12 col-md-12 mt-2">
+                <button type="submit" class="btn btn-block btn-lg btn-warning">Clasificar!</button>
+              </div>
+            </div>
+          
+          </form>.
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        Grupo 9 - Bacigalupe Maximiliano R. , Fleitas Alejandro, Pablo Valdéz
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS de la app-->
+  <script src="js/main.js"></script>
+  <script src="js/app.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
