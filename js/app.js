@@ -61,7 +61,7 @@ const analizarTipoDosTres = (ValProduccion, ValGramatica)=>{
 }
 
 const analizarTipoCeroUno = (ValProduccion, ValGramatica)=>{
-	alert("soy 0 o 1");
+	analizarTipoUno(ValProduccion,ValGramatica);
 }
 
 const analizarMayusculaProduccion = (ValProduccion)=>{
@@ -72,6 +72,134 @@ const analizarMayusculaProduccion = (ValProduccion)=>{
 	}
 }
 
+// Tipo 1
+const analizarTipoUno = (ValProduccion,ValGramatica)=>{
+	var arrayProduccion= [];
+	var arrayGramatica = [];
+
+	arrayProduccion = Array.from(ValProduccion);
+	arrayGramatica = Array.from(ValGramatica);
+
+	var contextoIzquierdo = [];
+	var contextoDerecho = [];
+	if (hayNoTerminal(arrayProduccion) == false ){
+		error();
+	}else {
+
+		 if (primeroUltimoTerminal(arrayProduccion) == true){
+			 
+			contextoIzquierdo = contextLeft(arrayProduccion);
+			contextoDerecho = contextRight(arrayProduccion);
+
+		 }else if (primeroEsTerminal(arrayProduccion) == true){
+			
+			contextoIzquierdo = contextLeft(arrayProduccion);
+
+		 }else if (ultimoEsTerminal(arrayProduccion) == true){
+			
+			contextoDerecho = contextRight(arrayProduccion);
+
+		 }else{
+			error();
+		 }
+
+
+		// if (primeroEsTerminal(arrayProduccion) == true){
+		// 	alert("comienza con terminal")
+		// };
+
+
+
+		// if (ultimoEsTerminal(arrayProduccion) == true){
+		// 	alert("Termina con terminal")
+		// };
+	}
+
+}
+
+const analizarMinuscula = (dato)=>{
+	if(regxs.lower.test(dato)== true){
+		return true;
+	}else { 
+		return false
+	}
+}
+
+const contextLeft =(array)=>{
+	var contextoL = [];
+	var i = 0;
+	while (analizarMinuscula(array[i]) == true ) {
+		contextoL.push(array[i]);
+		console.log(contextoL);
+		i++;
+	}
+	return contextoL;
+}
+
+const contextRight =(array)=>{
+	var reverseArray = array.reverse();
+	var contextoR =[];
+	var i = 0;
+
+	while (analizarMinuscula(reverseArray[i]) == true ) {
+		contextoR.push(array[i]);
+		i++;
+	}
+	contextoR.reverse();
+	
+	return contextoR;
+}
+
+const error = ()=>{ return alert("No se reconoce la gramatica!")}
+
+const hayNoTerminal = (array)=>{
+
+	var countMay = 0;	
+	for (var i = 0; i < array.length; i+=1) {
+		if (regxs.upper.test(array[i])){
+			countMay += 1;
+		}
+	}
+
+	if (countMay >= 1){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+const primeroEsTerminal = (array)=>{
+	if (regxs.lower.test(array[0])){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+const ultimoEsTerminal = (array)=>{
+	var ultimo = array.length-1;
+	if (regxs.lower.test(array[ultimo])){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+const primeroUltimoTerminal = (array)=>{
+	if ( (primeroEsTerminal(array) == true) && (ultimoEsTerminal(array) == true) ){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
+// Tipo 2
+const analizarTipoDos = (ValGramatica)=>{
+	
+}
+
+// Tipo 3
 const analizarTipoTres = (ValGramatica)=>{
 	var arrayGramatica = [];
 	var countMay = 0;
@@ -88,6 +216,7 @@ const analizarTipoTres = (ValGramatica)=>{
 
 		if ((countMay > 1) || (countMin > 1)) {
 			//analizarTipoDos(ValGramatica);
+			alert("SOY TIPO 2");
 		}else{
 			alert("SOY TIPO 3");
 		}
@@ -95,7 +224,7 @@ const analizarTipoTres = (ValGramatica)=>{
 		
 	} else{
 		//analizarTipoDos(ValGramatica);
-		alert("No se reconoce la gramatica");
+		alert("SOY TIPO 2");
 	}
 }
 
