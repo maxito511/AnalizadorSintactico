@@ -121,28 +121,29 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 			}
 
 		 }else if (ultimoEsTerminal(arrayProduccion) == true){
-			
+			var count = 0;
+
 			contextoDerProd = contextRight(arrayProduccion);
 			contextoDerGram = contextRight(arrayGramatica);
+			contextoDerProd = contextoDerProd.reverse();
+			contextoDerGram = contextoDerGram.reverse();
+			
+			for (var i = 0; i < contextoDerProd.length; i+=1) {
+				for (var j = 0; j < contextoDerGram.length; j+=1) {
+					if (contextoDerProd[i] == contextoDerGram[j]) {
+						count +=1;
+					}
+				}
+			}
 
-			if(JSON.stringify(contextoDerProd)==JSON.stringify(contextoDerGram)) {
+			if(count > 0){
 				alert("Sos tipo 1");
-		}
+			}
 
 		 }else{
 			error();
 		 }
 
-
-		// if (primeroEsTerminal(arrayProduccion) == true){
-		// 	alert("comienza con terminal")
-		// };
-
-
-
-		// if (ultimoEsTerminal(arrayProduccion) == true){
-		// 	alert("Termina con terminal")
-		// };
 	}
 
 }
