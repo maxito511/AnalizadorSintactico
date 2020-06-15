@@ -1,3 +1,15 @@
+const regxs = {
+    "lower": /^[a-z0-9 ]+$/,
+    "upper": /^[A-Z]+$/,
+	"upperLower": /^[A-Za-z0-9 ]+$/
+  }
+
+const evaluar = (dato)=>{
+	var palabra = dato.value.toUpperCase();
+	if (analizarMayuscula(palabra) == false) {
+		dato.value = dato.value.substring(0, dato.value.length - 1);
+	}
+}
 const array_to_set = function (array) {
 	for (var i = 0; i < array.length; i += 1) {
 		const u = array[i];
@@ -12,42 +24,50 @@ const array_to_set = function (array) {
 	return array.sort();
 };
 
-const regxs = {
-    "lower": /^[a-z0-9 ]+$/,
-    "upper": /^[A-Z]+$/,
-    "upperLower": /^[A-Za-z0-9 ]+$/
-  }
-
 var terminales = [];
 var no_terminales = [];
 
 var enviar = document.getElementById('enviar');
 enviar.onclick = ()=>{
-	// Dando formato a los T y NT
-	var terminales = document.getElementById('terminales');
-	var no_terminales = document.getElementById('noterminales');
-
-	const produccion = document.getElementById('produccion');
-	const gramatica = document.getElementById('gramatica');
-
-	var ValProduccion = produccion.value;
-	var ValGramatica = gramatica.value;
-
-	terminales.value = array_to_set(terminales.value.replace(/\s/g, '').split(''));
-	no_terminales.value = array_to_set(no_terminales.value.replace(/\s/g, '').split(''));
+	 if (analizarExistencia() == false){
+		 alert("Existen valores invalidos.");
+		 location.reload();
+	 }
+	 else{
 	
-	terminales.disabled = true;
-	no_terminales.disabled = true;
+		// Dando formato a los T y NT
+		var terminales = document.getElementById('terminales');
+		var no_terminales = document.getElementById('noterminales');
+		var selTipo = document.getElementById('selTipo');
+		const produccion = document.getElementById('produccion');
+		const gramatica = document.getElementById('gramatica');
+		const refresh = document.getElementById('refresh');
 
-	if (ValProduccion.length == 1 && ValGramatica.length > 0){
-		analizarTipoDosTres(ValProduccion, ValGramatica);
-	}else if (ValProduccion.length > 1 && ValGramatica.length > 0){
-		analizarTipoCeroUno(ValProduccion, ValGramatica);
-	}else{
-		//alert("Ingrese una producción");
+		var ValProduccion = produccion.value;
+		var ValGramatica = gramatica.value;
+
+		terminales.value = array_to_set(terminales.value.replace(/\s/g, '').split(''));
+		no_terminales.value = array_to_set(no_terminales.value.replace(/\s/g, '').split(''));
+
+		// bloqueo todo
+		selTipo.disabled = true;
+		terminales.disabled = true;
+		no_terminales.disabled = true;
+		enviar.disabled = true;	
+		produccion.disabled = true;	
+		gramatica.disabled = true;
+		enviar.hidden = true;	
+		refresh.hidden = false;
+
+		if (ValProduccion.length == 1 && ValGramatica.length > 0){
+			analizarTipoDosTres(ValProduccion, ValGramatica);
+		}else if (ValProduccion.length > 1 && ValGramatica.length > 0){
+			analizarTipoCeroUno(ValProduccion, ValGramatica);
+		}else{
+			//alert("Ingrese una producción");
+		}
+	
 	}
-	
-
 };
 
 const analizarTipoDosTres = (ValProduccion, ValGramatica)=>{
@@ -99,7 +119,9 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 			contextoDerGram = contextRight(arrayGramatica);
 
 			if(JSON.stringify(contextoIzqProd)==JSON.stringify(contextoIzqGram) && JSON.stringify(contextoDerProd)==JSON.stringify(contextoDerGram)) {
-					alert("Sos tipo 1");
+				analizarTipoSelec(1);
+			}else{
+				analizarTipoSelec(0);
 			}
 
 		 }else if (primeroEsTerminal(arrayProduccion) == true){
@@ -117,7 +139,9 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 			}
 
 			if(count > 0){
-				alert("Sos tipo 1");
+				analizarTipoSelec(1);
+			}else{
+				analizarTipoSelec(0);
 			}
 
 		 }else if (ultimoEsTerminal(arrayProduccion) == true){
@@ -137,7 +161,9 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 			}
 
 			if(count > 0){
-				alert("Sos tipo 1");
+				analizarTipoSelec(1);
+			}else{
+				analizarTipoSelec(0);
 			}
 
 		 }else{
@@ -155,13 +181,19 @@ const analizarMinuscula = (dato)=>{
 		return false
 	}
 }
+const analizarMayuscula= (dato)=>{
+	if(regxs.upper.test(dato) == true){
+		return true;
+	}else { 
+		return false
+	}
+}
 
 const contextLeft =(array)=>{
 	var contextoL = [];
 	var i = 0;
 	while ((analizarMinuscula(array[i]) == true) && (i < array.length) ) {
 		contextoL.push(array[i]);
-		console.log(contextoL);
 		i++;
 	}
 	return contextoL;
@@ -246,17 +278,81 @@ const analizarTipoTres = (ValGramatica)=>{
 		}
 
 		if ((countMay > 1) || (countMin > 1)) {
-			//analizarTipoDos(ValGramatica);
-			alert("SOY TIPO 2");
+			analizarTipoSelec(2);
 		}else{
-			alert("SOY TIPO 3");
+			analizarTipoSelec(3);
 		}
 
 		
 	} else{
-		//analizarTipoDos(ValGramatica);
-		alert("SOY TIPO 2");
+		analizarTipoSelec(2);
 	}
 }
 
- 
+// Analizar datos erroneos
+const analizarExistencia = ()=>{
+	const produccion = document.getElementById('produccion');
+	const gramatica = document.getElementById('gramatica');
+	const terminales = document.getElementById('terminales');
+	const no_terminales = document.getElementById('noterminales');
+
+	var ValTyNT = terminales.value + no_terminales.value.toUpperCase();
+	var ValProdGram = produccion.value + gramatica.value;
+
+	var arrayTyNT = Array.from(ValTyNT);
+	var arrayProdGram = Array.from(ValProdGram);
+
+	var countCoin = 0;
+	for (var i = 0; i < ValProdGram.length; i+=1) {
+		for (var j = 0; j < ValTyNT.length; j+=1) {
+			 if (ValProdGram[i] == ValTyNT[j]) {
+				countCoin +=1;
+			 }
+		}
+	}
+
+	if (countCoin == ValProdGram.length ) {
+		return true;
+	}else{
+		return false;
+	}
+
+}
+
+// Analizador final
+const analizarTipoSelec= (tipoFinal)=>{
+	var selTipo = document.getElementById('selTipo').value;
+	var detalles = document.getElementById('detalles');
+	var descrip ="";
+	switch (tipoFinal) {
+		case 0:
+			descrip  = "(No Restringidas)";
+			break;
+		case 1:
+			descrip  = "(Sensibles al Contexto)";
+		  break;
+		case 2:
+			descrip  = "(Libres de Contexto)";
+		  break;
+		case 3:
+			descrip  = "(Regulares)";
+		  break;  
+	}
+	
+	if(selTipo == -1){
+		alert("Seleccione tipo.");
+	}else{
+		if (selTipo == tipoFinal) {
+			detalles.innerHTML= "<h3>"+
+			"Felicitaciones, tu gramatica es correcta!!!"+
+			"</h3>";
+		}else{
+			detalles.innerHTML= "<h3>"+
+			"Lo siento, tu gramatica es incorrecta!!!"+
+			"</h3>"+
+			"<h3>"+
+			"La gramatica es de tipo: "+tipoFinal+" "+descrip
+			"</h3>";
+		}
+	}
+}

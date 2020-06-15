@@ -37,11 +37,11 @@
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <p class="text-dark">Tipo de Gramatica que desea analizar</p>
           <select class="custom-select" id="selTipo">
-              <option selected>Seleccionar tipo de Gramatica</option>
-              <option value="0">Tipo 0: Recurrentemente enumerable </option>
-              <option value="1">Tipo 1: Sensible al contexto</option>
-              <option value="2">Tipo 2: Libre de contexto</option>
-              <option value="3">Tipo 3: Regular</option>
+              <option value="-1" selected>Seleccionar tipo de Gramatica</option>
+              <option value="0">Tipo 0: No Restringidas </option>
+              <option value="1">Tipo 1: Sensibles al Contexto</option>
+              <option value="2">Tipo 2: Libres de Contexto</option>
+              <option value="3">Tipo 3: Regulares</option>
            </select>
            <br>
            <br>
@@ -49,7 +49,7 @@
             <div class="form-row justify-content-around">
                 <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2" >
                   <label for="noterminales">Símbolos No Terminales</label>
-                  <input id="noterminales"  style="text-transform:uppercase;" class="form-control form-control-lg" />
+                  <input id="noterminales" onkeyup="evaluar(this);" style="text-transform:uppercase;" class="form-control form-control-lg" />
                 </div>
                 <div class="col-12 col-md-4 mb-2 mb-md-0  mt-2">
                   <label for="#terminales">Símbolos Terminales</label>
@@ -69,12 +69,19 @@
               </div>
               
               <div id="agrega" class="col-12 col-md-12 mt-2">
-                <button id="agregar" type="button" class="btn btn-block btn-lg btn-warning">Agregar otra producción!</button>
+                <button id="agregar" hidden="true" type="button" class="btn btn-block btn-lg btn-warning">Agregar otra producción!</button>
               </div>
               <div class="col-12 col-md-12 mt-2">
                 <button id="enviar" class="btn btn-block btn-lg btn-warning">Clasificar!</button>
               </div>
-            </div>         
+              <div class="col-12 col-md-12 mt-2">
+                <button id="refresh" onClick="window.location.reload();" hidden="true" class="btn btn-block btn-lg btn-warning">Reiniciar!</button>
+              </div>
+            </div> 
+            <div class="row">
+              <div id="detalles" class="col-12 col-md-12 mt-2">
+              </div>
+            </div>        
         </div>
       </div>
     </div>
