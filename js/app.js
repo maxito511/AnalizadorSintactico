@@ -80,24 +80,54 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 	arrayProduccion = Array.from(ValProduccion);
 	arrayGramatica = Array.from(ValGramatica);
 
-	var contextoIzquierdo = [];
-	var contextoDerecho = [];
+	var contextoIzqProd = [];
+	var contextoDerProd = [];
+
+	var contextoIzqGram = [];
+	var contextoDerGram = [];
+
 	if (hayNoTerminal(arrayProduccion) == false ){
 		error();
 	}else {
 
 		 if (primeroUltimoTerminal(arrayProduccion) == true){
 			 
-			contextoIzquierdo = contextLeft(arrayProduccion);
-			contextoDerecho = contextRight(arrayProduccion);
+			contextoIzqProd = contextLeft(arrayProduccion);
+			contextoDerProd = contextRight(arrayProduccion);
+
+			contextoIzqGram = contextLeft(arrayGramatica);
+			contextoDerGram = contextRight(arrayGramatica);
+
+			if(JSON.stringify(contextoIzqProd)==JSON.stringify(contextoIzqGram) && JSON.stringify(contextoDerProd)==JSON.stringify(contextoDerGram)) {
+					alert("Sos tipo 1");
+			}
 
 		 }else if (primeroEsTerminal(arrayProduccion) == true){
 			
-			contextoIzquierdo = contextLeft(arrayProduccion);
+			contextoIzqProd = contextLeft(arrayProduccion);
+			contextoIzqGram = contextLeft(arrayGramatica);
+			var count = 0;
+
+			for (var i = 0; i < contextoIzqProd.length; i+=1) {
+				for (var j = 0; j < contextoIzqGram.length; j+=1) {
+					if (contextoIzqProd[i] == contextoIzqGram[j]) {
+						count +=1;
+					}
+				}
+			}
+
+			if(count > 0){
+				alert("Sos tipo 1");
+			}
 
 		 }else if (ultimoEsTerminal(arrayProduccion) == true){
 			
-			contextoDerecho = contextRight(arrayProduccion);
+			contextoDerProd = contextRight(arrayProduccion);
+			contextoDerGram = contextRight(arrayGramatica);
+
+			if(JSON.stringify(contextoDerProd)==JSON.stringify(contextoDerGram)) {
+				alert("Sos tipo 1");
+		}
 
 		 }else{
 			error();
@@ -118,7 +148,7 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 }
 
 const analizarMinuscula = (dato)=>{
-	if(regxs.lower.test(dato)== true){
+	if(regxs.lower.test(dato) == true){
 		return true;
 	}else { 
 		return false
@@ -128,7 +158,7 @@ const analizarMinuscula = (dato)=>{
 const contextLeft =(array)=>{
 	var contextoL = [];
 	var i = 0;
-	while (analizarMinuscula(array[i]) == true ) {
+	while ((analizarMinuscula(array[i]) == true) && (i < array.length) ) {
 		contextoL.push(array[i]);
 		console.log(contextoL);
 		i++;
@@ -141,12 +171,12 @@ const contextRight =(array)=>{
 	var contextoR =[];
 	var i = 0;
 
-	while (analizarMinuscula(reverseArray[i]) == true ) {
+	while ( (analizarMinuscula(reverseArray[i]) == true) && (i < array.length) ) {
 		contextoR.push(array[i]);
 		i++;
 	}
 	contextoR.reverse();
-	
+
 	return contextoR;
 }
 
