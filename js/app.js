@@ -242,12 +242,6 @@ const primeroUltimoTerminal = (array)=>{
 	}
 }
 
-
-// Tipo 2
-const analizarTipoDos = (ValGramatica)=>{
-	
-}
-
 // Tipo 3
 const analizarTipoTres = (ValGramatica)=>{
 	var arrayGramatica = [];
