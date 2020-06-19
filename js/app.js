@@ -128,39 +128,25 @@ const analizarTipoUno = (ValProduccion,ValGramatica)=>{
 			
 			contextoIzqProd = contextLeft(arrayProduccion);
 			contextoIzqGram = contextLeft(arrayGramatica);
-			var count = 0;
 
-			for (var i = 0; i < contextoIzqProd.length; i+=1) {
-				for (var j = 0; j < contextoIzqGram.length; j+=1) {
-					if (contextoIzqProd[i] == contextoIzqGram[j]) {
-						count +=1;
-					}
-				}
-			}
+			var esTipoUno = contextoIzqProd.toString().includes(contextoIzqGram.toString());
 
-			if(count > 0){
+			if(esTipoUno == true){
 				analizarTipoSelec(1);
 			}else{
 				analizarTipoSelec(0);
 			}
 
 		 }else if (ultimoEsTerminal(arrayProduccion) == true){
-			var count = 0;
 
 			contextoDerProd = contextRight(arrayProduccion);
 			contextoDerGram = contextRight(arrayGramatica);
 			contextoDerProd = contextoDerProd.reverse();
 			contextoDerGram = contextoDerGram.reverse();
 			
-			for (var i = 0; i < contextoDerProd.length; i+=1) {
-				for (var j = 0; j < contextoDerGram.length; j+=1) {
-					if (contextoDerProd[i] == contextoDerGram[j]) {
-						count +=1;
-					}
-				}
-			}
-
-			if(count > 0){
+			var esTipoUno = contextoDerProd.toString().includes(contextoDerGram.toString());
+			
+			if(esTipoUno == true){
 				analizarTipoSelec(1);
 			}else{
 				analizarTipoSelec(0);
@@ -298,9 +284,6 @@ const analizarExistencia = ()=>{
 
 	var ValTyNT = terminales.value + no_terminales.value.toUpperCase();
 	var ValProdGram = produccion.value + gramatica.value;
-
-	var arrayTyNT = Array.from(ValTyNT);
-	var arrayProdGram = Array.from(ValProdGram);
 
 	var countCoin = 0;
 	for (var i = 0; i < ValProdGram.length; i+=1) {
